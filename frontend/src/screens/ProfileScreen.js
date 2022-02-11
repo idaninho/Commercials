@@ -1,18 +1,16 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { Form, Button, Row, Col, Table } from "react-bootstrap";
-import { LinkContainer } from "react-router-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
-import Message from "../components/Message";
-import Loader from "../components/Loader";
-import { getUserDetails, updateUserProfile } from "../actions/userActions";
-import { USER_UPDATE_PROFILE_RESET } from "../constants/userConstants";
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Form, Button, Row, Col } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import Message from '../components/Message';
+import Loader from '../components/Loader';
+import { getUserDetails, updateUserProfile } from '../actions/userActions';
 
 const ProfileScreen = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState(null);
 
   const navigate = useNavigate();
@@ -30,10 +28,10 @@ const ProfileScreen = () => {
 
   useEffect(() => {
     if (!userInfo) {
-      navigate("/login");
+      navigate('/login');
     } else {
       if (!user.name) {
-        dispatch(getUserDetails("profile"));
+        dispatch(getUserDetails('profile'));
       } else {
         setName(user.name);
         setEmail(user.email);
@@ -45,7 +43,7 @@ const ProfileScreen = () => {
     e.preventDefault();
     //dispatch register
     if (password !== confirmPassword) {
-      setMessage("Passwords do not match");
+      setMessage('Passwords do not match');
     } else {
       //dispatch Update Profile
       dispatch(updateUserProfile({ id: user._id, name, email, password }));
