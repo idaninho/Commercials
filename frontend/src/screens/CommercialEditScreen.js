@@ -23,9 +23,7 @@ const CommercialEditScreen = () => {
   const { id: commercialId } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // const navigate = useNavigate();
-  // const navigate = useNavigate();
-
+  
   const commercialDetails = useSelector((state) => state.commercialDetails);
   const { loading, error, commercial } = commercialDetails;
 

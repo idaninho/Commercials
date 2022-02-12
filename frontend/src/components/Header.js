@@ -26,7 +26,7 @@ const Header = () => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ml-auto">
-              <LinkContainer to="/screen/1">
+              <LinkContainer to="/screen/:id">
                 <Nav.Link>Screen Page</Nav.Link>
               </LinkContainer>
               {userInfo ? (

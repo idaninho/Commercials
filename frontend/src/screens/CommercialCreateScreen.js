@@ -1,21 +1,21 @@
-import axios from 'axios';
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
-import { Form, Button } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
-import Message from '../components/Message';
-import Loader from '../components/Loader';
-import FormContainer from '../components/FormContainer';
+import axios from "axios";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { Form, Button } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import Message from "../components/Message";
+import Loader from "../components/Loader";
+import FormContainer from "../components/FormContainer";
 import {
   createCommercial,
   listCommercialsDetails,
-} from '../actions/commercialActions';
+} from "../actions/commercialActions";
 
 const CommercialCreateScreen = () => {
-  const [imageUrl, setImageUrl] = useState('');
+  const [imageUrl, setImageUrl] = useState("");
 
-  const [seconds, setSeconds] = useState('');
-  const [description, setDescription] = useState('');
+  const [seconds, setSeconds] = useState("");
+  const [description, setDescription] = useState("");
   const [screensForDisplay, setScreensForDisplay] = useState([]);
   const [uploading, setUploading] = useState(false);
 
@@ -36,7 +36,7 @@ const CommercialCreateScreen = () => {
   useEffect(() => {
     if (successCreate) {
       dispatch(listCommercialsDetails(commercialId));
-      navigate('/');
+      navigate("/");
     } else {
       setImageUrl(commercial.imageUrl);
       setDescription(commercial.description);
@@ -48,15 +48,15 @@ const CommercialCreateScreen = () => {
   const uploadFileHandler = async (e) => {
     const file = e.target.files[0];
     const formData = new FormData();
-    formData.append('image', file);
+    formData.append("image", file);
     setUploading(true);
     try {
       const config = {
         headers: {
-          'Content-Type': 'multipart/form-data',
+          "Content-Type": "multipart/form-data",
         },
       };
-      const { data } = await axios.post('/api/upload', formData, config);
+      const { data } = await axios.post("/api/upload", formData, config);
       setImageUrl(data);
       setUploading(false);
     } catch (error) {
