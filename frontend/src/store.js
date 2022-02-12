@@ -1,14 +1,13 @@
-import { createStore, combineReducers, applyMiddleware } from "redux";
-import thunk from "redux-thunk";
-import { composeWithDevTools } from "redux-devtools-extension";
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+import { composeWithDevTools } from 'redux-devtools-extension';
 import {
   commercialListReducer,
   commercialDetailsReducer,
   commercialDeleteReducer,
   commercialCreateReducer,
   commercialUpdateReducer,
- 
-} from "./reducers/commercialReducers";
+} from './reducers/commercialReducers';
 
 import {
   userDeleteReducer,
@@ -18,8 +17,7 @@ import {
   userRegisterReducer,
   userUpdateProfileReducer,
   userUpdateReducer,
-} from "./reducers/userReducers";
-
+} from './reducers/userReducers';
 
 const reducer = combineReducers({
   commercialList: commercialListReducer,
@@ -34,7 +32,6 @@ const reducer = combineReducers({
   userUpdate: userUpdateReducer,
   userList: userListReducer,
   userDelete: userDeleteReducer,
-  
 });
 
 const middleware = [thunk];

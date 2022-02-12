@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { listCommercials } from "../actions/commercialActions";
-import { Col, Row } from "react-bootstrap";
-import Commercial from "../components/Commercial";
-import Message from "../components/Message";
-import Loader from "../components/Loader";
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { listCommercials } from '../actions/commercialActions';
+import { Col, Row } from 'react-bootstrap';
+import Commercial from '../components/Commercial';
+import Message from '../components/Message';
+import Loader from '../components/Loader';
 
 const HomeScreen = () => {
   const dispatch = useDispatch();

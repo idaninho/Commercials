@@ -46,11 +46,9 @@ const CommercialListScreen = () => {
     if (!userInfo.isAdmin) {
       navigate('/login')
     }
-    if (successCreate) {
-      navigate(`/admin/commercial/${createdCommercial._id}/edit`)
-    } else {
+    
       dispatch(listCommercials())
-    }
+    
   }, [
     dispatch,
     userInfo,

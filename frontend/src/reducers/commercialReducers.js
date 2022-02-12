@@ -18,7 +18,7 @@ import {
   COMMERCIAL_UPDATE_SUCCESS,
 } from "../constants/commercialConstants";
 
-export const commercialListReducer = (state = { commercials: [] }, action) => {
+export const commercialListReducer = (state = { commercials: [],loading:true }, action) => {
   switch (action.type) {
     case COMMERCIAL_LIST_REQUEST:
       return {

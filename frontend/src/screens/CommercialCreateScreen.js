@@ -1,27 +1,31 @@
-import axios from "axios";
-import React, { useState, useEffect } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { Form, Button } from "react-bootstrap";
-import { useDispatch, useSelector } from "react-redux";
-import Message from "../components/Message";
-import Loader from "../components/Loader";
-import FormContainer from "../components/FormContainer";
+import axios from 'axios';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Form, Button } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import Message from '../components/Message';
+import Loader from '../components/Loader';
+import FormContainer from '../components/FormContainer';
 import {
   createCommercial,
   listCommercialsDetails,
-} from "../actions/commercialActions";
+} from '../actions/commercialActions';
+import { COMMERCIAL_CREATE_RESET } from '../constants/commercialConstants';
 
 const CommercialCreateScreen = () => {
-  const [imageUrl, setImageUrl] = useState("");
+  const [imageUrl, setImageUrl] = useState('');
 
-  const [seconds, setSeconds] = useState("");
-  const [description, setDescription] = useState("");
+  const [seconds, setSeconds] = useState('');
+  const [description, setDescription] = useState('');
   const [screensForDisplay, setScreensForDisplay] = useState([]);
   const [uploading, setUploading] = useState(false);
 
   const { id: commercialId } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
 
   const commercialDetails = useSelector((state) => state.commercialDetails);
   const { loading, error, commercial } = commercialDetails;
@@ -34,29 +38,32 @@ const CommercialCreateScreen = () => {
   } = commercialCreate;
 
   useEffect(() => {
+    if (!userInfo.isAdmin) {
+      navigate('/login');
+    }
     if (successCreate) {
-      dispatch(listCommercialsDetails(commercialId));
-      navigate("/");
-    } else {
+      // dispatch({ type: COMMERCIAL_CREATE_RESET });
+      navigate('/');
+    } else if (commercial) {
       setImageUrl(commercial.imageUrl);
       setDescription(commercial.description);
       setSeconds(commercial.seconds);
       setScreensForDisplay(commercial.screensForDisplay);
     }
-  }, [commercial, commercialId, dispatch, navigate, successCreate]);
+  }, [commercial, dispatch, navigate, successCreate, userInfo]);
 
   const uploadFileHandler = async (e) => {
     const file = e.target.files[0];
     const formData = new FormData();
-    formData.append("image", file);
+    formData.append('image', file);
     setUploading(true);
     try {
       const config = {
         headers: {
-          "Content-Type": "multipart/form-data",
+          'Content-Type': 'multipart/form-data',
         },
       };
-      const { data } = await axios.post("/api/upload", formData, config);
+      const { data } = await axios.post('/api/upload', formData, config);
       setImageUrl(data);
       setUploading(false);
     } catch (error) {
