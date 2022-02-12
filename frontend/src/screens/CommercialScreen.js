@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import { Row, Col, Image, ListGroup } from "react-bootstrap";
-import { listCommercialsDetails } from "../actions/commercialActions";
-import Loader from "../components/Loader";
-import Message from "../components/Message";
+import React, { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { Row, Col, Image, ListGroup } from 'react-bootstrap';
+import { listCommercialsDetails } from '../actions/commercialActions';
+import Loader from '../components/Loader';
+import Message from '../components/Message';
 //import commercials from '../commercials'
 
 const CommercialScreen = () => {
@@ -16,10 +16,7 @@ const CommercialScreen = () => {
   const commercialDetails = useSelector((state) => state.commercialDetails);
   const { loading, error, commercial } = commercialDetails;
 
-  //   const commercial = commercials.find((p) => p._id === id)
   console.log(id);
-  //   console.log(commercials[id - 1].countInStock)
-  //   console.log(commercial.countInStock)
 
   useEffect(() => {
     dispatch(listCommercialsDetails(id));

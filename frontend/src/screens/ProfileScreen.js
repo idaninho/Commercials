@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
 import { getUserDetails, updateUserProfile } from '../actions/userActions';
+import { USER_UPDATE_PROFILE_RESET } from '../constants/userConstants';
 
 const ProfileScreen = () => {
   const [name, setName] = useState('');
@@ -27,6 +28,9 @@ const ProfileScreen = () => {
   const { success } = userUpdateProfile;
 
   useEffect(() => {
+    if (success) {
+      dispatch({ type: USER_UPDATE_PROFILE_RESET });
+    }
     if (!userInfo) {
       navigate('/login');
     } else {
@@ -42,8 +46,8 @@ const ProfileScreen = () => {
   const submitHandler = (e) => {
     e.preventDefault();
     //dispatch register
-    if (password !== confirmPassword) {
-      setMessage('Passwords do not match');
+    if (!password || password !== confirmPassword) {
+      setMessage('Please check your Passwords!');
     } else {
       //dispatch Update Profile
       dispatch(updateUserProfile({ id: user._id, name, email, password }));

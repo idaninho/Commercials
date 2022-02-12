@@ -1,27 +1,27 @@
-import express from "express";
+import express from 'express';
 import {
   createCommercial,
   deleteCommercial,
   getCommercialById,
   getCommercials,
   updateCommercial,
-} from "../controllers/commercialController.js";
-import { admin, protect } from "../middleware.js/authMiddleware.js";
+} from '../controllers/commercialController.js';
+import { admin, protect } from '../middleware.js/authMiddleware.js';
 
 const router = express.Router();
 
 // Fetch all commercials
 //@route GET /api/commercials
 //@access public
-router.route("/").get(getCommercials).post(createCommercial);
+router.route('/').get(getCommercials).post(protect, admin, createCommercial);
 
 // Fetch single commercial
 //@route GET /api/commercials/:id
 //@access public
 router
-  .route("/:id")
+  .route('/:id')
   .get(getCommercialById)
   .delete(protect, admin, deleteCommercial)
-  .put(updateCommercial);
+  .put(protect, admin, updateCommercial);
 
 export default router;

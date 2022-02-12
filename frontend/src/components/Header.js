@@ -17,7 +17,7 @@ const Header = () => {
     navigate("/login");
   };
 
-  
+
   return (
     <header>
       <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect>
