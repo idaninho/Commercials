@@ -1,9 +1,9 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { LinkContainer } from "react-router-bootstrap";
-import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
-import { logout } from "../actions/userActions";
-import { useNavigate } from "react-router-dom";
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { LinkContainer } from 'react-router-bootstrap';
+import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
+import { logout } from '../actions/userActions';
+import { useNavigate } from 'react-router-dom';
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -12,23 +12,47 @@ const Header = () => {
   const { userInfo } = userLogin;
 
   const logoutHandler = () => {
-    console.log("logout");
+    console.log('logout');
     dispatch(logout());
-    navigate("/login");
+    navigate('/login');
   };
 
+  const clientDown = async () => {
+    await fetch('http://localhost:5001/api/connected/counterDown', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }).catch((error) => {
+      window.alert(error);
+      return;
+    });
+    console.log('counter down');
+  };
+
+  const clientUp = async () => {
+    await fetch('http://localhost:5001/api/connected/counterUp', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }).catch((error) => {
+      window.alert(error);
+      return;
+    });
+  };
 
   return (
     <header>
       <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect>
         <Container>
-          <LinkContainer to="/">
+          <LinkContainer to="/" onClick={clientDown}>
             <Navbar.Brand>Commercials</Navbar.Brand>
           </LinkContainer>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ml-auto">
-              <LinkContainer to="/screen/1">
+              <LinkContainer to="/screen/1" onClick={clientUp}>
                 <Nav.Link>Screen Page</Nav.Link>
               </LinkContainer>
               {userInfo ? (

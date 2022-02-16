@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Table } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,6 +10,7 @@ import { useNavigate } from 'react-router-dom';
 const UserListScreen = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [online, setOnline] = useState(0);
   const userList = useSelector((state) => state.userList);
   const { loading, error, users } = userList;
 
@@ -19,9 +20,27 @@ const UserListScreen = () => {
   const userDelete = useSelector((state) => state.userDelete);
   const { success: successDelete } = userDelete;
 
+  const clientOnline = async () => {
+    const data = await fetch('http://localhost:5001/api/connected/', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }).catch((error) => {
+      window.alert(error);
+      return;
+    });
+
+    const jsonnn = await data.json();
+    console.log(jsonnn[0].counter);
+    setOnline(jsonnn[0].counter);
+  };
+
+  
   useEffect(() => {
     if (userInfo && userInfo.isAdmin) {
       dispatch(listUsers());
+      clientOnline();
     } else {
       navigate('/login');
     }
@@ -43,7 +62,7 @@ const UserListScreen = () => {
       ) : (
         <>
           <h4 style={{ textAlign: 'right' }}>
-            Number of Online Users: {users.length}
+            Number of Online Users: {online}
           </h4>
 
           <Table striped bordered hover responsive className="table-sm">

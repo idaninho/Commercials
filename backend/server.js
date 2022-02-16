@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import path from 'path';
 import morgan from 'morgan';
+import cors from 'cors';
 import connectDB from './config/db.js';
 import commercialRoutes from './routes/commercialRoutes.js';
 import userRoutes from './routes/userRoutes.js';
@@ -12,12 +13,13 @@ import { notFound, errorHandler } from './middleware.js/errorMiddleware.js';
 const app = express();
 dotenv.config();
 connectDB();
+
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 
 app.use(express.json());
-
+app.use(cors());
 app.use('/api/commercials', commercialRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/upload', uploadRoutes);

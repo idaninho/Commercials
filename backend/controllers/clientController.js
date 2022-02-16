@@ -26,10 +26,7 @@ export const postClient = asyncHandler(async (req, res) => {
   res.status(201).json(commercial);
 });
 
-// router.put('/:id/like', function (req, res, next) {
-//   Message.findOneAndUpdate({ _id: req.params.id }, { $inc: { likes: 1 } })
-//     .then(function (message) {
-//       res.send(message);
-//     })
-//     .catch(next);
-// });
+export const getClients = asyncHandler(async (req, res) => {
+  const clients = await Client.find({});
+  res.json(clients);
+});

@@ -43,7 +43,7 @@ const ClientCommercial = ({ commercials }) => {
           fontSize: '32px',
         }}
       >
-        {commercials[count].imageUrl}
+        {commercials[count].description}
       </h5>
     </div>
   );
